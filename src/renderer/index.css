@@ -369,6 +369,98 @@ body {
   border-bottom: 2px solid #f1f5f9;
 }
 
+.settings-group { margin-bottom: 20px; }
+
+.settings-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+
+.settings-input, .settings-textarea {
+  width: 100%;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  color: #0f172a;
+  font-size: 13px;
+  padding: 10px 12px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.15s;
+}
+.settings-input:focus, .settings-textarea:focus { border-color: #7c3aed; }
+.settings-textarea { resize: none; margin-bottom: 8px; }
+
+.custom-presets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.custom-preset-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.custom-preset-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.custom-preset-delete, .history-delete-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 4px;
+}
+.custom-preset-delete:hover, .history-delete-btn:hover { color: #ef4444; }
+
+.add-preset-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e1;
+}
+
+.btn-add-preset {
+  background: #7c3aed;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-add-preset:hover:not(:disabled) { background: #6d28d9; }
+.btn-add-preset:disabled { background: #cbd5e1; cursor: not-allowed; }
+
+.empty-state {
+  font-size: 13px;
+  color: #94a3b8;
+  font-style: italic;
+  text-align: center;
+  padding: 12px;
+}
+
+/* ── History Items ─────────────────── */
 .history-item {
   background: #f8fafc;
   border: 2px solid #f1f5f9;
@@ -377,15 +469,33 @@ body {
   padding: 12px;
 }
 
-.history-instruction { color: #7c3aed; font-weight: 800; }
+.history-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.history-instruction { color: #7c3aed; font-weight: 800; font-size: 12px; }
+
+.history-result {
+  font-size: 13px;
+  color: #334155;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
 
 .history-use-btn {
   background: white;
-  border: 1px solid #e2e8f0;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
   color: #475569;
   font-weight: 700;
   padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.1s;
 }
+.history-use-btn:hover { background: #f1f5f9; border-color: #cbd5e1; }
 
 /* ── Scrollbar ─────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }

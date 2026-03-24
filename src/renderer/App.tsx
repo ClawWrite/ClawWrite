@@ -140,9 +140,14 @@ export default function App() {
               title="Select new text and recapture"
             >↻ Recapture</button>
           </div>
-          <p className={`source-text ${!sourceText ? 'fetching' : ''}`}>
-            {sourceText ? truncate(sourceText, 140) : 'Capturing selection…'}
-          </p>
+          <textarea
+            className="source-textarea"
+            placeholder="Capturing selection or type your text here..."
+            value={sourceText}
+            onChange={(e) => setSourceText(e.target.value)}
+            spellCheck={false}
+            rows={2}
+          />
         </div>
       )}
 

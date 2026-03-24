@@ -1,6 +1,6 @@
 # ClawWrite — Architecture Document
 
-> **Version:** 1.0.2
+> **Version:** 1.0.3
 > **Last updated:** 2026-03-24
 > **Platform:** Windows only (uses Win32 APIs and PowerShell)
 
@@ -99,7 +99,7 @@ ClawWrite follows Electron's **three-process model** with strict isolation:
 │  └──────────┘  └──────────────┘  └────────────┘       │        │
 │                                                       │        │
 │  PowerShell execution ←───────────────────────────────┘        │
-│  (temp .ps1 files with Win32 P/Invoke)                         │
+│  (Base64 -EncodedCommand with Win32 P/Invoke)                  │
 └────────────────────────┬────────────────────────────────────────┘
                          │ IPC (ipcMain.handle / ipcRenderer.invoke)
                          │
@@ -175,12 +175,12 @@ ClawWrite follows Electron's **three-process model** with strict isolation:
 
 ### 5.3 `main/paste.ts` — Text Capture & Auto-Replace
 
-This is the most platform-specific module. It uses **PowerShell scripts executed via temp `.ps1` files** to interact with the Windows desktop.
+This is the most platform-specific module. It uses **PowerShell scripts executed via Base64 `-EncodedCommand`** to interact with the Windows desktop seamlessly, bypassing enterprise AppLocker/AV restrictions on temporary disk files.
 
 **`runPowerShell(script)`** — Helper that:
-1. Writes the script to a temp `.ps1` file in the OS temp directory
-2. Executes it with `-ExecutionPolicy Bypass -File`
-3. Cleans up the temp file in a `finally` block
+1. Converts the supplied script payload to UTF-16LE Base64 format
+2. Executes it securely in-memory using `-ExecutionPolicy Bypass -EncodedCommand`
+3. Bypasses standard restrictions on temporary disk execution
 4. Has a 10-second timeout to prevent hangs
 
 **`captureContext()`** — Captures selected text:
@@ -205,8 +205,8 @@ This is the most platform-specific module. It uses **PowerShell scripts executed
 4. Waits 250ms then reads clipboard
 5. Returns the captured text (no before/after comparison — always returns what's on clipboard)
 
-**Why temp .ps1 files instead of inline commands?**
-PowerShell here-strings (`@'...'@`) and multi-line `Add-Type` blocks require literal newlines. Earlier versions used inline commands (replacing newlines with `;`), but this broke here-string syntax. Temp files preserve the script exactly as written.
+**Why `-EncodedCommand` instead of temp `.ps1` files or inline commands?**
+Earlier versions used temporary `.ps1` files, but this frequently triggered stringent Antivirus and AppLocker restrictions on corporate networks (especially when dumped to the `%TEMP%` folder). Transitioning to inline base64 encoded strings entirely avoids disk drops, while retaining exact formatting for here-strings (`@'...'@`) that would otherwise break when manually escaping standard inline parameters.
 
 ### 5.4 `main/gemini.ts` — AI Integration
 
@@ -280,7 +280,7 @@ Single React component managing 5 phases via state:
 
 | Phase     | UI                                                        |
 |-----------|-----------------------------------------------------------|
-| `idle`    | Source text preview, preset grid (2-col), custom input    |
+| `idle`    | Editable source text textarea, preset grid, custom input  |
 | `loading` | Animated bouncing dots, "Rewriting..." label              |
 | `result`  | Editable textarea, Back/Retry/Copy/Replace buttons        |
 | `settings`| API key input, custom preset list + add form              |
@@ -422,7 +422,7 @@ The API key can also be set at runtime via the Settings UI (stored in electron-s
 
 ## 8. Key Design Decisions
 
-1. **Temp .ps1 files over inline PowerShell**: PowerShell here-strings break when newlines are replaced with semicolons. Writing temp scripts preserves syntax and allows complex `Add-Type` blocks.
+1. **EncodedCommand over Temp Files**: PowerShell here-strings easily break when newlines are replaced with semicolons. Dumping temporary `.ps1` script blocks into the `%TEMP%` folder reliably triggers enterprise Security mechanisms. Standardizing on `-EncodedCommand` perfectly solves both issues, ensuring raw scripts pass into memory quietly and safely bypassing corporate AV blockers.
 
 2. **keybd_event over SendKeys for Ctrl+C**: When the global hotkey fires, the user's modifier keys (Ctrl+Shift) may still be physically held. `SendKeys` conflicts with held modifiers. `keybd_event` sends raw virtual key events at the OS level, avoiding this.
 

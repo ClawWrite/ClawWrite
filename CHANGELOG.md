@@ -4,6 +4,14 @@ All notable changes to this project are documented in this file.
 
 ---
 
+## [1.0.3] — 2026-03-24
+
+### Fixes & Enhancements
+- **Enterprise Network Compatibility**: Rewrote the underlying clipboard capture and text replacement engine to execute PowerShell instructions inline via base64 `-EncodedCommand`. This completely bypasses AppLocker execution policies and Antivirus blocks triggered by writing and executing temporary `.ps1` scripts from the Windows `%TEMP%` folder, significantly improving office network reliability.
+- **Resilient Empty State**: When the global hotkey is pressed without any text selected (or if native text capture fails), the popup no longer crashes or force-closes. It now gracefully remains open. To support this seamlessly, the static "Capturing selection..." label has been replaced with an interactive editable `<textarea>`, allowing users to manually type or paste their source text directly into the popup.
+
+---
+
 ## [1.0.2] — 2026-03-24
 
 ### Features

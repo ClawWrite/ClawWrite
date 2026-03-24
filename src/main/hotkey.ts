@@ -26,14 +26,8 @@ export function registerHotkey(): boolean {
       // 2. Start capturing context (gets HWND + polls for key release + sends Ctrl+C)
       const { text } = await captureContext();
 
-      if (!text) {
-        // Nothing selected — hide/destroy the ghost popup silently
-        destroyPopup();
-        return;
-      }
-
       // 3. Final show: update text and take focus
-      createAndShowPopup(text, true);
+      createAndShowPopup(text || '', true);
     } finally {
       // Small cooldown to prevent debounce-like flickering on fast repeat
       setTimeout(() => { hotkeyLock = false; }, 400);

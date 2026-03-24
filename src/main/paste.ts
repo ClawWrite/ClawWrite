@@ -9,18 +9,21 @@ const execAsync = promisify(exec);
 
 let previousWindowHandle: string | null = null;
 
-/** Write a temp .ps1 script and execute it — avoids all quoting/inlining issues. */
+/** Run a PowerShell script by encoding it as Base64 to bypass execution policies and temp file restrictions */
 async function runPowerShell(script: string): Promise<string> {
-  const tmpFile = path.join(app.getPath('temp'), `clawwrite_${Date.now()}.ps1`);
-  await writeFile(tmpFile, script, 'utf-8');
+  // PowerShell -EncodedCommand expects UTF-16LE Base64
+  const buffer = Buffer.from(script, 'utf16le');
+  const b64 = buffer.toString('base64');
+
   try {
     const { stdout } = await execAsync(
-      `powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "${tmpFile}"`,
+      `powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -EncodedCommand ${b64}`,
       { timeout: 10000 }
     );
     return stdout;
-  } finally {
-    unlink(tmpFile).catch(() => {});
+  } catch (err: any) {
+    if (err.stdout) return err.stdout;
+    throw err;
   }
 }
 

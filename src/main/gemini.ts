@@ -72,6 +72,12 @@ export const BUILT_IN_PRESETS: PresetAction[] = [
     isBuiltIn: true,
     prompt: 'Summarise this in 1–2 sentences capturing the key point. Return only the summary, nothing else.'
   },
+  {
+    id: 'enhance-prompt',
+    label: '🧠 Enhance Prompt',
+    isBuiltIn: true,
+    prompt: 'Act as an elite AI prompt engineer. Take this rough instruction or question and rewrite it into a highly detailed, clear, and structured prompt optimized for a Large Language Model. Ensure it establishes explicit context, specifies constraints and desired formatting, and eliminates ambiguity. Return only the final enhanced prompt, nothing else.'
+  }
 ];
 
 // ─────────────────────────────────────────────────────────────

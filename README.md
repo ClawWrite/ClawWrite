@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="resources/icon.png" width="128" alt="ClawWrite Logo">
+</div>
+
 # ClawWrite 🐾✍️
 
 ClawWrite is a system-wide AI-powered writing assistant for Windows. It lets you rewrite, summarize, or enhance text in **any application**—Notepad, Chrome, Slack, Word, etc. Simply select your text, hit a global hotkey, and let Google Gemini AI do the rest.

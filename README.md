@@ -1,5 +1,10 @@
+<p align="center">
+  <img src="resources/banner.png" alt="ClawWrite Banner" width="100%">
+</p>
+
 # ClawWrite
-> A near-instant, system-wide AI writing assistant for Windows.
+> **The high-performance, system-wide AI writing companion for Windows.**
+
 
 ## Project Overview
 ClawWrite is an ultra-fast, system-wide AI writing companion designed exclusively for Windows that fundamentally changes how you write, edit, and perfect text. Rather than breaking your focus by context-switching into a separate browser tab or dedicated chat interface, ClawWrite brings the power of Google's Gemini AI directly to your cursor. Whether you're drafting an email in Outlook, chatting in Slack, or coding in an IDE, simply select your text and press a global hotkey. ClawWrite will instantly ingest the text, pop up a beautiful frameless window, and allow you to quickly apply powerful preset commands (like "Make Formal" or "Shorten") or custom prompts. Once satisfied with the AI's output, a single click seamlessly replaces your original highlighted text.
@@ -7,12 +12,15 @@ ClawWrite is an ultra-fast, system-wide AI writing companion designed exclusivel
 ## Key Features
 - **Global Hotkey Activation**: Trigger ClawWrite instantly from anywhere in Windows using `Ctrl+Shift+Space`.
 - **Intelligent In-Place Replacement**: Automatically pastes the polished output directly back into your original application with one click.
+- **True Capture Engine**: A robust "Clear-and-Detect" strategy ensures that even text matches from previous clipboard states are correctly captured.
 - **Enterprise-Grade Architecture**: Designed to bypass strict corporate AppLocker execution policies and Antivirus temporal file restrictions utilizing isolated memory and inline base64 `-EncodedCommand` PowerShell executions.
-- **Persistent Resilient Window**: Features a near-instant window lifecycle. When you press the hotkey, the UI appears immediately. If text capture fails or no text was selected, the UI gracefully falls back to an editable input box allowing seamless prompt continuation.
+- **One-Click Recapture**: Effortlessly switch to another app, select new text, and reload the assistant with a single click—no need to re-trigger the hotkey.
+- **Resilient UI Lifecycle**: Features a near-instant window lifecycle. If no text was selected, the UI gracefully falls back to an editable input box allowing seamless manual entry or pasting.
 - **Robust Preset System**: Ships with 8 built-in core actions (Improve, Formal, Casual, Shorten, Expand, Grammar, Bullets, Summarise) with full support for user-defined custom AI presets.
 - **Clipboard Monitoring (Opt-in)**: A background service you can enable that automatically shows the AI assistant whenever new text is copied to your clipboard.
 - **Recent Chat & History Logging**: Never lose track of your work with localized built-in history storage up to 20 entries.
-- **Premium User Experience**: Designed using a crisp, accessible "Bold Light" system theme featuring glassmorphism elements, intuitive animations, and taskbar visibility.
+- **Premium Design System**: A crisp, accessible "#Bold Light" theme featuring glassmorphism elements, intuitive animations, and taskbar visibility.
+
 
 ## Tech Stack
 - **Framework Core**: Electron 29
@@ -34,7 +42,7 @@ Before running ClawWrite locally, ensure you have the following installed and co
 ### Installation
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/[INSERT_GITHUB_USERNAME]/ClawWrite.git
+   git clone https://github.com/ClawWrite/ClawWrite.git
    cd ClawWrite
    ```
 
@@ -66,7 +74,9 @@ Before running ClawWrite locally, ensure you have the following installed and co
 2. Press the global hotkey: `Ctrl+Shift+Space`
 3. The ClawWrite floating window will instantly materialize next to your cursor, pre-populated with your selected text.
 4. Click a built-in preset like **✨ Improve** or type entirely free-form instructions into the **Custom instruction...** field and hit **Enter**.
-5. Once the AI answers, either modify the returned text in the text area, click **Copy** to save it to your clipboard, or click **⚡ Replace** to forcefully inject it back into the original active window.
+5. **(Optional)** If you select different text while the window is open, click **↻ Recapture** to update the assistant without closing it.
+6. Once the AI answers, either modify the returned text in the text area, click **Copy** to save it to your clipboard, or click **⚡ Replace** to forcefully inject it back into the original active window.
+
 
 ### Utilizing Empty States
 If you run the hotkey without anything highlighted, the application still functions robustly—morphing into a blank canvas where you can securely paste text or request a scratch prompt from Gemini. 
@@ -92,8 +102,8 @@ Contributions are absolutely welcome! We follow a standard "fork-and-pull" workf
 Distributed under the **MIT License**. See `LICENSE` for more information.
 
 ## Contact/Acknowledgments
-- **Maintainer**: [INSERT_YOUR_NAME / GITHUB_USERNAME]
+- **Maintainer**: [Sagar Kalra](https://github.com/sagarkalra-tech/) (ClawWrite Organization)
 - **Documentation & UI Logic Engine**: Powered by automated expert implementations to bypass Windows environmental restrictions rapidly. 
 
 ---
-*Created with ❤️ for uninterrupted flow-state writing on Windows.*
+*Created with ❤️ by **Sagar Kalra** for uninterrupted flow-state writing on Windows.*

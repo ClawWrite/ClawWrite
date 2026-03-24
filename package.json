@@ -1,7 +1,9 @@
 {
   "name": "clawwrite",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "System-wide AI writing assistant for Windows",
+  "author": "Sagar Kalra",
+  "license": "MIT",
   "main": "dist/main/index.js",
   "scripts": {
     "dev": "electron-vite dev",

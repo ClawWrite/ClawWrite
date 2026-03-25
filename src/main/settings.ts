@@ -34,6 +34,7 @@ export interface Settings {
   autoStartEnabled: boolean;
   popupOpacity: number;       // 0.88–1.0 — user preference
   maxHistoryEntries: number;
+  momOverridePrompt: string;
 }
 
 export const store = new Store<Settings>({
@@ -48,6 +49,7 @@ export const store = new Store<Settings>({
     autoStartEnabled: false,
     popupOpacity: 0.96,
     maxHistoryEntries: 20,
+    momOverridePrompt: '',
   }
 });
 

@@ -17,12 +17,14 @@ export default function App() {
   const [activeInstruction, setActiveInstruction] = useState('');
   const [newPresetLabel, setNewPresetLabel] = useState('');
   const [newPresetPrompt, setNewPresetPrompt] = useState('');
+  const [momPrompt, setMomPrompt] = useState('');
   const customInputRef = useRef<HTMLInputElement>(null);
 
   // One-time setup: fetch presets/history and listen for init-text
   useEffect(() => {
     window.clawwrite.getPresets().then(setPresets);
     window.clawwrite.getHistory().then(setHistory);
+    window.clawwrite.getMomPrompt().then(setMomPrompt);
 
     const unsubInitText = window.clawwrite.onInitText((text: string) => {
       setSourceText(text);
@@ -256,6 +258,30 @@ export default function App() {
                 }}
               />
             </div>
+          </div>
+
+          <div className="settings-group">
+            <label className="settings-label">MOM Customization</label>
+            <p className="settings-description">Modify how the "Minutes of Meeting" preset processes notes.</p>
+            <textarea
+              className="settings-textarea"
+              placeholder="MOM instructions…"
+              value={momPrompt}
+              onChange={(e) => setMomPrompt(e.target.value)}
+              onBlur={() => window.clawwrite.setMomPrompt(momPrompt)}
+              rows={4}
+            />
+            <button
+              className="btn-secondary"
+              style={{ fontSize: '11px', marginTop: '4px' }}
+              onClick={async () => {
+                await window.clawwrite.setMomPrompt('');
+                const def = await window.clawwrite.getMomPrompt();
+                setMomPrompt(def);
+                const updatedPresets = await window.clawwrite.getPresets();
+                setPresets(updatedPresets);
+              }}
+            >Reset to Default</button>
           </div>
 
           <div className="settings-group">

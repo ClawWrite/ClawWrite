@@ -23,68 +23,74 @@ export interface CustomPresetAction {
 
 export type AnyPreset = PresetAction | CustomPresetAction;
 
-export const BUILT_IN_PRESETS: PresetAction[] = [
-  {
-    id: 'improve',
-    label: '✨ Improve',
-    isBuiltIn: true,
-    prompt: 'Improve the writing quality, clarity, and flow. Fix any awkward phrasing. Return only the improved text, nothing else.'
-  },
-  {
-    id: 'formal',
-    label: '📋 Make Formal',
-    isBuiltIn: true,
-    prompt: 'Rewrite in a professional, formal tone suitable for business communication. Return only the rewritten text, nothing else.'
-  },
-  {
-    id: 'casual',
-    label: '😊 Make Casual',
-    isBuiltIn: true,
-    prompt: 'Rewrite in a friendly, conversational, approachable tone. Return only the rewritten text, nothing else.'
-  },
-  {
-    id: 'shorten',
-    label: '✂️ Shorten',
-    isBuiltIn: true,
-    prompt: 'Make this significantly more concise without losing the key information. Cut unnecessary words and filler. Return only the shortened text, nothing else.'
-  },
-  {
-    id: 'expand',
-    label: '📝 Expand',
-    isBuiltIn: true,
-    prompt: 'Expand this with more relevant detail, context, and supporting points. Keep it coherent and useful. Return only the expanded text, nothing else.'
-  },
-  {
-    id: 'grammar',
-    label: '✅ Fix Grammar',
-    isBuiltIn: true,
-    prompt: 'Fix all grammar, spelling, and punctuation errors. Do not change the style or meaning. Return only the corrected text, nothing else.'
-  },
-  {
-    id: 'bullets',
-    label: '• Bullet Points',
-    isBuiltIn: true,
-    prompt: 'Convert this into clear, concise bullet points. Each bullet should be a distinct point. Return only the bullet points, nothing else.'
-  },
-  {
-    id: 'summarise',
-    label: '📌 Summarise',
-    isBuiltIn: true,
-    prompt: 'Summarise this in 1–2 sentences capturing the key point. Return only the summary, nothing else.'
-  },
-  {
-    id: 'mom',
-    label: '📝 Minutes Of Meeting',
-    isBuiltIn: true,
-    prompt: 'Transform this transcript or notes into professional, structured Minutes of Meeting. Include sections for: 1. Overview/Objective, 2. Key Discussion Points, 3. Action Items (with owners if specified), and 4. Next Steps. Use clear headings and bullet points. Return only the MOM, nothing else.'
-  },
-  {
-    id: 'enhance-prompt',
-    label: '🧠 Enhance Prompt',
-    isBuiltIn: true,
-    prompt: 'Act as an elite AI prompt engineer. Take this rough instruction or question and rewrite it into a highly detailed, clear, and structured prompt optimized for a Large Language Model. Ensure it establishes explicit context, specifies constraints and desired formatting, and eliminates ambiguity. Return only the final enhanced prompt, nothing else.'
-  }
-];
+export const DEFAULT_MOM_PROMPT = 'Transform this transcript or notes into professional, structured Minutes of Meeting.\n\nPARTICIPANT CATEGORIZATION:\n1. Categorize all mentioned participants into "Internal" and "External".\n2. Internal participants are those with an "@itbd.net" email domain.\n3. All others must be labeled as "External".\n\nSTRUCTURE:\n1. Overview/Objective\n2. Participants (Internal vs External list)\n3. Key Discussion Points\n4. Action Items (with owners if specified)\n5. Next Steps\n\nUse clear headings (Markdown ###) and bullet points. Return only the MOM, nothing else.';
+
+export function getBuiltInPresets(): PresetAction[] {
+  const momPrompt = store.get('momOverridePrompt') || DEFAULT_MOM_PROMPT;
+
+  return [
+    {
+      id: 'improve',
+      label: '✨ Improve',
+      isBuiltIn: true,
+      prompt: 'Improve the writing quality, clarity, and flow. Fix any awkward phrasing. Return only the improved text, nothing else.'
+    },
+    {
+      id: 'formal',
+      label: '📋 Make Formal',
+      isBuiltIn: true,
+      prompt: 'Rewrite in a professional, formal tone suitable for business communication. Return only the rewritten text, nothing else.'
+    },
+    {
+      id: 'casual',
+      label: '😊 Make Casual',
+      isBuiltIn: true,
+      prompt: 'Rewrite in a friendly, conversational, approachable tone. Return only the rewritten text, nothing else.'
+    },
+    {
+      id: 'shorten',
+      label: '✂️ Shorten',
+      isBuiltIn: true,
+      prompt: 'Make this significantly more concise without losing the key information. Cut unnecessary words and filler. Return only the shortened text, nothing else.'
+    },
+    {
+      id: 'expand',
+      label: '📝 Expand',
+      isBuiltIn: true,
+      prompt: 'Expand this with more relevant detail, context, and supporting points. Keep it coherent and useful. Return only the expanded text, nothing else.'
+    },
+    {
+      id: 'grammar',
+      label: '✅ Fix Grammar',
+      isBuiltIn: true,
+      prompt: 'Fix all grammar, spelling, and punctuation errors. Do not change the style or meaning. Return only the corrected text, nothing else.'
+    },
+    {
+      id: 'bullets',
+      label: '• Bullet Points',
+      isBuiltIn: true,
+      prompt: 'Convert this into clear, concise bullet points. Each bullet should be a distinct point. Return only the bullet points, nothing else.'
+    },
+    {
+      id: 'summarise',
+      label: '📌 Summarise',
+      isBuiltIn: true,
+      prompt: 'Summarise this in 1–2 sentences capturing the key point. Return only the summary, nothing else.'
+    },
+    {
+      id: 'mom',
+      label: '📝 Minutes Of Meeting',
+      isBuiltIn: true,
+      prompt: momPrompt,
+    },
+    {
+      id: 'enhance-prompt',
+      label: '🧠 Enhance Prompt',
+      isBuiltIn: true,
+      prompt: 'Act as an elite AI prompt engineer. Take this rough instruction or question and rewrite it into a highly detailed, clear, and structured prompt optimized for a Large Language Model. Ensure it establishes explicit context, specifies constraints and desired formatting, and eliminates ambiguity. Return only the final enhanced prompt, nothing else.'
+    }
+  ];
+}
 
 // ─────────────────────────────────────────────────────────────
 // System prompt — the most important instruction
@@ -140,5 +146,5 @@ export function getAllPresets(): AnyPreset[] {
     ...p,
     isBuiltIn: false as const
   }));
-  return [...BUILT_IN_PRESETS, ...customPresets];
+  return [...getBuiltInPresets(), ...customPresets];
 }

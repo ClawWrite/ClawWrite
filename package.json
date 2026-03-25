@@ -1,6 +1,6 @@
 {
   "name": "clawwrite",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "System-wide AI writing assistant for Windows",
   "author": "Sagar Kalra",
   "license": "MIT",
@@ -15,11 +15,15 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "dotenv": "^16.4.0",
-    "electron-store": "^8.2.0"
+    "electron-store": "^8.2.0",
+    "marked": "^4.3.0",
+    "nodemailer": "^8.0.4"
   },
   "devDependencies": {
     "@electron-toolkit/utils": "^4.0.0",
+    "@types/marked": "^4.3.2",
     "@types/node": "^20.0.0",
+    "@types/nodemailer": "^7.0.11",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.2.0",

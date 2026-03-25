@@ -2,6 +2,15 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.0.5] — 2026-03-25
+
+### Features
+- **Automated MOM Emails**: The "Minutes of Meeting" preset now automatically emails the generated minutes to a configured address using SMTP2go, with a clean and professional HTML template powered by `marked`.
+- **Intelligent MOM Categorization**: The default MOM instruction now instructs the AI to categorize meeting participants as "Internal" (@itbd.net domain) and "External".
+- **Customizable MOM Prompt**: Users can now fully override and customize the base instructions used for the Minutes of Meeting preset via the new MOM Customization section in Settings.
+
+---
+
 ## [1.0.4] — 2026-03-25
 
 ### Features

@@ -4,13 +4,14 @@ import {
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { store, getApiKey } from './settings.js';
-import { rewriteText, getAllPresets } from './gemini.js';
+import { rewriteText, getAllPresets, DEFAULT_MOM_PROMPT } from './gemini.js';
 import { clipboardMonitor } from './clipboard-monitor.js';
 import { registerHotkey, unregisterHotkey } from './hotkey.js';
 import { initPopup, createAndShowPopup, destroyPopup, hidePopup } from './popup-window.js';
 import { recordPreviousWindow, autoReplace, recaptureFromWindow } from './paste.js';
 import { addHistoryEntry, getHistory, clearHistory, deleteHistoryEntry } from './history.js';
 import { setAutoStart, getAutoStartEnabled } from './startup.js';
+import { sendMOMEmail } from './email.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -147,6 +148,14 @@ function setupIPC(): void {
   ipcMain.handle('rewrite', async (_, sourceText: string, instruction: string, presetId: string | null) => {
     try {
       const result = await rewriteText(sourceText, instruction);
+      
+      // If this was a "Minutes of Meeting" request, email it automatically
+      if (presetId === 'mom') {
+        sendMOMEmail(result).catch(err => {
+          console.error('[MOM-Email] Background delivery failed:', err);
+        });
+      }
+
       // Save to history in background — don't await
       addHistoryEntry(sourceText, instruction, result, presetId);
       return { success: true, result };
@@ -225,5 +234,15 @@ function setupIPC(): void {
   ipcMain.handle('delete-custom-preset', (_, id: string) => {
     store.set('customPresets', store.get('customPresets').filter(p => p.id !== id));
     return getAllPresets();
+  });
+
+  // MOM Prompt Customization
+  ipcMain.handle('get-mom-prompt', () => {
+    return store.get('momOverridePrompt') || DEFAULT_MOM_PROMPT;
+  });
+
+  ipcMain.handle('set-mom-prompt', (_, prompt: string) => {
+    store.set('momOverridePrompt', prompt);
+    return true;
   });
 }

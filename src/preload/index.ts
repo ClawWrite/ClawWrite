@@ -42,9 +42,12 @@ contextBridge.exposeInMainWorld('clawwrite', {
   deleteCustomPreset: (id: string): Promise<AnyPreset[]> =>
     ipcRenderer.invoke('delete-custom-preset', id),
 
-  // History
-  deleteHistoryEntry: (id: string): Promise<boolean> =>
-    ipcRenderer.invoke('delete-history-entry', id),
+  // MOM Customization
+  setMomPrompt: (prompt: string): Promise<boolean> =>
+    ipcRenderer.invoke('set-mom-prompt', prompt),
+
+  getMomPrompt: (): Promise<string> =>
+    ipcRenderer.invoke('get-mom-prompt'),
 
   // Main → Renderer events
   onInitText: (cb: (text: string) => void): (() => void) => {
@@ -74,6 +77,8 @@ declare global {
       addCustomPreset: (preset: { label: string; prompt: string }) => Promise<AnyPreset[]>;
       deleteCustomPreset: (id: string) => Promise<AnyPreset[]>;
       deleteHistoryEntry: (id: string) => Promise<boolean>;
+      setMomPrompt: (prompt: string) => Promise<boolean>;
+      getMomPrompt: () => Promise<string>;
       onInitText: (cb: (text: string) => void) => () => void;
     };
   }

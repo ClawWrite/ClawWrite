@@ -33,6 +33,8 @@ declare global {
 
       // History
       deleteHistoryEntry: (id: string) => Promise<boolean>;
+      getMomPrompt: () => Promise<string>;
+      setMomPrompt: (prompt: string) => Promise<boolean>;
 
       // Events
       onInitText: (cb: (text: string) => void) => () => void;

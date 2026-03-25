@@ -1,6 +1,6 @@
 # ClawWrite — Architecture Document
 
-> **Version:** 1.0.4
+> **Version:** 1.0.5
 > **Last updated:** 2026-03-25
 > **Platform:** Windows only (uses Win32 APIs and PowerShell)
 

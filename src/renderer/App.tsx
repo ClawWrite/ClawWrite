@@ -156,13 +156,24 @@ export default function App() {
         <div className="actions-section">
           <div className="preset-grid">
             {presets.map((p) => (
-              <button
-                key={p.id}
-                className="preset-btn"
-                onClick={() => runRewrite(p.prompt, p.id)}
-              >
-                {p.label}
-              </button>
+              <div key={p.id} className="preset-item-container">
+                <button
+                  className="preset-btn"
+                  onClick={() => runRewrite(p.prompt, p.id)}
+                >
+                  {p.label}
+                </button>
+                {!p.isBuiltIn && (
+                  <button
+                    className="preset-delete-overlay"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeletePreset(p.id);
+                    }}
+                    title="Delete custom preset"
+                  >✕</button>
+                )}
+              </div>
             ))}
           </div>
           <div className="custom-row">

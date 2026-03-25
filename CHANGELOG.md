@@ -2,6 +2,15 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.0.4] — 2026-03-25
+
+### Features
+- **Minutes Of Meeting Preset**: Added a new built-in "📝 Minutes Of Meeting" action. It transforms meeting transcripts or rough notes into professional MOMs with structured sections for objective, discussion points, action items, and next steps.
+- **Easy Preset Deletion**: Custom presets can now be deleted directly from the main action grid. Hover over any custom preset button to reveal a small delete "✕" button. (Deletion is still available via the Settings menu as well.)
+
+### Fixes
+- **TypeScript Type Safety**: Added global type declarations for the `window.clawwrite` API and updated `tsconfig.web.json` to include necessary main-process types. This resolves several development-time "warnings" (TypeScript errors) in `App.tsx` and provides full IntelliSense for the renderer process.
+
 ---
 
 ## [1.0.3] — 2026-03-24

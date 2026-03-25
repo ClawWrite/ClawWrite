@@ -1,7 +1,7 @@
 # ClawWrite — Architecture Document
 
-> **Version:** 1.0.3
-> **Last updated:** 2026-03-24
+> **Version:** 1.0.4
+> **Last updated:** 2026-03-25
 > **Platform:** Windows only (uses Win32 APIs and PowerShell)
 
 ---
@@ -58,6 +58,7 @@ ClawWrite/
 │   │   └── index.ts               # contextBridge IPC API exposed to renderer as window.clawwrite
 │   └── renderer/                  # Electron renderer process (browser context)
 │       ├── App.tsx                # React popup UI — all phases (idle, loading, result, settings, history)
+│       ├── global.d.ts            # Global TypeScript interface for window.clawwrite
 │       ├── main.tsx               # React root mount
 │       ├── index.html             # HTML entry point
 │       └── index.css              # Full design system — premium bold light theme
@@ -113,6 +114,7 @@ ClawWrite follows Electron's **three-process model** with strict isolation:
 │    addCustomPreset, deleteCustomPreset, deleteHistoryEntry,      │
 │    onInitText (returns unsubscribe function)                     │
 │  }                                                               │
+│  (Fully typed via global.d.ts in the renderer process)           │
 └────────────────────────┬─────────────────────────────────────────┘
                          │
 ┌────────────────────────┴────────────────────────────────────────┐
@@ -213,8 +215,8 @@ Earlier versions used temporary `.ps1` files, but this frequently triggered stri
 - Uses `@google/generative-ai` SDK
 - Model: configurable via store, defaults to `gemini-3-flash-preview`
 - System prompt enforces "return only rewritten text, no preamble"
-- 8 built-in presets: Improve, Make Formal, Make Casual, Shorten, Expand, Fix Grammar, Bullet Points, Summarise
-- Users can add custom presets (stored in electron-store)
+- 9 built-in presets: Improve, Make Formal, Make Casual, Shorten, Expand, Fix Grammar, Bullet Points, Summarise, Minutes Of Meeting
+- Users can add custom presets (stored in electron-store), which can be deleted from Settings or the main grid.
 
 ### 5.5 `main/settings.ts` — Configuration Store
 

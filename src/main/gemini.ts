@@ -73,6 +73,12 @@ export const BUILT_IN_PRESETS: PresetAction[] = [
     prompt: 'Summarise this in 1–2 sentences capturing the key point. Return only the summary, nothing else.'
   },
   {
+    id: 'mom',
+    label: '📝 Minutes Of Meeting',
+    isBuiltIn: true,
+    prompt: 'Transform this transcript or notes into professional, structured Minutes of Meeting. Include sections for: 1. Overview/Objective, 2. Key Discussion Points, 3. Action Items (with owners if specified), and 4. Next Steps. Use clear headings and bullet points. Return only the MOM, nothing else.'
+  },
+  {
     id: 'enhance-prompt',
     label: '🧠 Enhance Prompt',
     isBuiltIn: true,
